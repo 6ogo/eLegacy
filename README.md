@@ -172,19 +172,9 @@ Each turn consists of 5 stages:
    - Control resource-rich territories
    - Maintain supply lines
 
-## 🛠 Installation & Setup
+## 🛠 Start
+Start building 2D with https://phaser.io/
 
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/empires-legacy.git
-
-# Install dependencies
-cd empires-legacy
-npm install
-
-# Start the development server
-npm run dev
-```
 
 ## 🤝 Contributing
 
