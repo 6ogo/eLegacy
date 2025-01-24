@@ -1,7 +1,7 @@
 # Assets that we need to create
 
 ## Territory/Map Assets
-\```plaintext
+```plaintext
 public/assets/textures/
 ├── terrain/
 │   ├── plains.png
@@ -13,7 +13,7 @@ public/assets/textures/
 │   ├── selection.png
 │   ├── hover.png
 │   └── border.png
-\```
+```
 
 ### Easiest creation method:
 * Tiled Map Editor with hex templates
