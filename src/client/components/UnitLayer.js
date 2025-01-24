@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { getTerritoryCenter } from './game/GameAssets';
 
 const UnitLayer = ({ units, mapScale }) => {
   const canvasRef = useRef(null);
