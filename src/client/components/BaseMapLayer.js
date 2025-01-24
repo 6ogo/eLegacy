@@ -1,4 +1,5 @@
 import React from 'react';
+import { getTerritoryCenter } from './game/GameAssets';
 
 const BaseMapLayer = ({ territories, onTerritoryClick }) => {
   return (
