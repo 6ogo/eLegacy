@@ -20,7 +20,7 @@ public/assets/textures/
 * For simple versions, create in Piskel (free, browser-based)
 
 ## Unit Assets
-\```plaintext
+```plaintext
 public/assets/units/
 ├── infantry/
 │   ├── idle.png
@@ -34,7 +34,7 @@ public/assets/units/
     ├── idle.png
     ├── move.png
     └── attack.png
-\```
+```
 
 ### Easiest creation method:
 * Use Universal LPC Spritesheet Character Generator
@@ -42,7 +42,7 @@ public/assets/units/
 * For simple versions, use Piskel
 
 ## Building Assets
-\```plaintext
+```plaintext
 public/assets/buildings/
 ├── resource/
 │   ├── lumber_mill.png
@@ -59,7 +59,7 @@ public/assets/buildings/
     ├── wonder.png
     ├── embassy.png
     └── university.png
-\```
+```
 
 ### Easiest creation method:
 * Use Kenney's Asset Packs (free)
@@ -67,13 +67,13 @@ public/assets/buildings/
 * For simple versions, use Piskel
 
 ## Resource Icons
-\```plaintext
+```plaintext
 public/assets/resources/
 ├── gold.png
 ├── wood.png
 ├── stone.png
 └── food.png
-\```
+```
 
 ### Easiest creation method:
 * Use Game-Icons.net
@@ -81,7 +81,7 @@ public/assets/resources/
 * Create simple ones in Figma (free)
 
 ## UI Elements
-\```plaintext
+```plaintext
 public/assets/ui/
 ├── buttons/
 │   ├── normal.png
@@ -96,7 +96,7 @@ public/assets/ui/
     ├── move.png
     ├── build.png
     └── research.png
-\```
+```
 
 ### Easiest creation method:
 * Use Figma (free)
@@ -104,7 +104,7 @@ public/assets/ui/
 * Create in Inkscape (free)
 
 ## Effect Animations
-\```plaintext
+```plaintext
 public/assets/effects/
 ├── combat/
 │   ├── hit.png
@@ -114,7 +114,7 @@ public/assets/effects/
     ├── building.png
     ├── researching.png
     └── trading.png
-\```
+```
 
 ### Easiest creation method:
 * Use Piskel for simple animations
