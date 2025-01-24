@@ -133,3 +133,6 @@ Find free effects on OpenGameArt.org
 - Inkscape - Good for vector graphics
 - Tiled - Excellent for map creation
 - GIMP - Free alternative to Photoshop
+
+  ## Others
+  - Recraft.ai
