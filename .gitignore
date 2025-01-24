@@ -1,2 +1,4 @@
 
 .env
+node_modules/zustand/umd/middleware.production.js
+node_modules
