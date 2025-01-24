@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-900 text-white;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+  }
+  
+  .btn-primary {
+    @apply bg-game-primary hover:bg-blue-700 text-white;
+  }
+  
+  .btn-secondary {
+    @apply bg-game-secondary hover:bg-gray-600 text-white;
+  }
+  
+  .territory-tile {
+    @apply cursor-pointer transition-colors duration-200;
+  }
+  
+  .territory-tile-default {
+    @apply fill-territory-default hover:fill-territory-hover;
+  }
+  
+  .territory-tile-selected {
+    @apply fill-territory-selected;
+  }
+  
+  .territory-tile-enemy {
+    @apply fill-territory-enemy;
+  }
+  
+  .territory-tile-friendly {
+    @apply fill-territory-friendly;
+  }
+
+  .panel {
+    @apply bg-gray-800 rounded-lg p-4 shadow-lg;
+  }
+  
+  .input {
+    @apply bg-gray-700 text-white rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-game-primary;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-500;
+}
