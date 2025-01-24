@@ -1,87 +1,63 @@
 // src/client/pages/Game.js
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Stage, Layer } from 'react-konva';
-import { loadGameAssets } from '../components/game/GameAssets';
-import Territory from '../components/game/Territory';
-import { BaseMapLayer } from '../components/BaseMapLayer';
-import { UnitLayer } from '../components/UnitLayer';
-import { FXLayer } from '../components/FXLayer';
+import { useDispatch, useSelector } from 'react-redux';
+import BaseMapLayer from '../components/BaseMapLayer';
+import UnitLayer from '../components/UnitLayer';
+import FXLayer from '../components/FXLayer';
+import { getTerritoryCenter } from '../components/game/GameAssets';
 import { 
   setTerritories, 
   setLoadingState,
-  updateViewPort,
-  setZoom,
-  panMap
+  setSelectedTerritory 
 } from '../state/mapSlice';
 
 const Game = () => {
   const dispatch = useDispatch();
-  const viewPort = useSelector(state => state.map.viewPort);
   const territories = useSelector(state => state.map.territories);
-  const loadingState = useSelector(state => state.map.loadingState);
+  const selectedTerritory = useSelector(state => state.map.interaction.selectedTerritory);
+  const viewPort = useSelector(state => state.map.viewPort);
 
   useEffect(() => {
-    const initializeGame = async () => {
-      try {
-        dispatch(setLoadingState('loading'));
-        const assets = await loadGameAssets();
-        dispatch(setTerritories(assets.territories));
-        dispatch(setLoadingState('idle'));
-      } catch (error) {
-        dispatch(setLoadingState('error'));
-        console.error('Failed to initialize game:', error);
-      }
-    };
-
-    initializeGame();
+    // Load initial game state
+    dispatch(setLoadingState('loading'));
+    // ... load territories
+    dispatch(setLoadingState('idle'));
   }, [dispatch]);
 
-  const handleWheel = (e) => {
-    e.evt.preventDefault();
-    const scaleBy = 1.1;
-    const oldScale = viewPort.zoom;
-    const pointer = e.target.getStage().getPointerPosition();
+  const handleStageClick = (e) => {
+    const clickedPoint = e.target.getStage().getPointerPosition();
+    
+    // Find clicked territory
+    const clickedTerritory = Object.values(territories).find(territory => {
+      const center = getTerritoryCenter(territory);
+      const dx = clickedPoint.x - center.x;
+      const dy = clickedPoint.y - center.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+      return distance < 30; // Territory click radius
+    });
 
-    const newScale = e.evt.deltaY > 0 ? oldScale / scaleBy : oldScale * scaleBy;
-    dispatch(setZoom(newScale));
-
-    // Adjust position to zoom toward mouse pointer
-    const deltaX = (pointer.x - viewPort.x) * (1 - 1 / scaleBy);
-    const deltaY = (pointer.y - viewPort.y) * (1 - 1 / scaleBy);
-    dispatch(panMap({ deltaX, deltaY }));
+    if (clickedTerritory) {
+      dispatch(setSelectedTerritory(clickedTerritory.id));
+    } else {
+      dispatch(setSelectedTerritory(null));
+    }
   };
-
-  if (loadingState === 'loading') {
-    return <div>Loading game assets...</div>;
-  }
-
-  if (loadingState === 'error') {
-    return <div>Error loading game assets</div>;
-  }
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-gray-900">
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}
-        onWheel={handleWheel}
+        onClick={handleStageClick}
         draggable
         x={viewPort.x}
         y={viewPort.y}
         scale={{ x: viewPort.zoom, y: viewPort.zoom }}
       >
-        <Layer>
-          <BaseMapLayer />
-          {Object.values(territories).map(territory => (
-            <Territory
-              key={territory.id}
-              {...territory}
-            />
-          ))}
-          <UnitLayer />
-          <FXLayer />
-        </Layer>
+        <BaseMapLayer />
+        <UnitLayer />
+        <FXLayer />
       </Stage>
     </div>
   );

@@ -1,66 +1,61 @@
-import React, { useEffect, useRef } from 'react';
+// src/client/components/UnitLayer.js
+import React from 'react';
+import { Layer, Group, Circle, Text } from 'react-konva';
+import { useSelector } from 'react-redux';
 import { getTerritoryCenter } from './game/GameAssets';
 
-const UnitLayer = ({ units, mapScale }) => {
-  const canvasRef = useRef(null);
-  
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-    
-    // Setup canvas for proper resolution
-    const setupCanvas = () => {
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = rect.width * dpr;
-      canvas.height = rect.height * dpr;
-      ctx.scale(dpr, dpr);
-    };
-
-    // Draw units
-    const drawUnits = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      units.forEach(unit => {
-        const { x, y, type, owner } = unit;
-        
-        // Draw unit circle
-        ctx.beginPath();
-        ctx.arc(x * mapScale, y * mapScale, 10, 0, Math.PI * 2);
-        ctx.fillStyle = owner.color;
-        ctx.fill();
-        ctx.strokeStyle = '#000';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        
-        // Draw unit count
-        ctx.fillStyle = '#fff';
-        ctx.font = '12px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(unit.count.toString(), x * mapScale, y * mapScale);
-      });
-    };
-
-    setupCanvas();
-    drawUnits();
-
-    // Redraw on resize
-    const handleResize = () => {
-      setupCanvas();
-      drawUnits();
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [units, mapScale]);
+const UnitLayer = () => {
+  const units = useSelector(state => state.map.units);
+  const territories = useSelector(state => state.map.territories);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute top-0 left-0 w-full h-full pointer-events-none"
-    />
+    <Layer>
+      {Object.values(units).map(unit => {
+        const territory = territories[unit.territoryId];
+        if (!territory) return null;
+
+        const center = getTerritoryCenter(territory);
+        const color = getUnitColor(unit.type);
+
+        return (
+          <Group key={unit.id} x={center.x} y={center.y}>
+            {/* Unit circle */}
+            <Circle
+              radius={15}
+              fill={color}
+              stroke="#fff"
+              strokeWidth={2}
+            />
+            
+            {/* Unit count */}
+            <Text
+              text={unit.count.toString()}
+              fill="#fff"
+              fontSize={12}
+              align="center"
+              verticalAlign="middle"
+              offsetX={-6}
+              offsetY={-6}
+            />
+          </Group>
+        );
+      })}
+    </Layer>
   );
+};
+
+// Helper function to get unit colors
+const getUnitColor = (unitType) => {
+  switch (unitType) {
+    case 'infantry':
+      return '#3182ce';
+    case 'cavalry':
+      return '#805ad5';
+    case 'artillery':
+      return '#e53e3e';
+    default:
+      return '#718096';
+  }
 };
 
 export default UnitLayer;
