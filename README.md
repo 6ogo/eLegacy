@@ -9,7 +9,6 @@ Empire's Legacy is a turn-based strategy game where 2-4 players compete to build
 ### 🎯 Victory Conditions
 - **Domination Victory**: Control 75% of the map
 - **Economic Victory**: Accumulate 10,000 gold and maintain control of 3 trade centers
-- **Cultural Victory**: Build 5 wonders and maintain maximum cultural influence in 50% of territories
 - **Military Victory**: Capture all enemy capitals
 
 ## 🎲 Game Mechanics
